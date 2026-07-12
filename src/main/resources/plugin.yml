@@ -1,0 +1,25 @@
+name: UltraWhitelist
+version: '${version}'
+
+main: io.lolyay.mc.whitelistPlugin.WhitelistPlugin
+api-version: '26.1.2'
+load: STARTUP
+author: Lolyay
+description: UltraWhitelist - Multi-list whitelist with Named lists, Hotswap and importing
+
+folia-supported: true
+
+commands:
+  wl:
+    description: Manage whitelists (multi-list, Geyser-friendly).
+    usage: /wl help
+    aliases: [ultrawhitelist, uwl]
+    permission: ultrawhitelist.admin
+
+permissions:
+  ultrawhitelist.admin:
+    description: Allows managing whitelists via /wl.
+    default: op
+  ultrawhitelist.bypass:
+    description: Player is never kicked by /wl enforce.
+    default: op
