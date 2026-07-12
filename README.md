@@ -2,6 +2,14 @@
 
 UltraWhitelist is a Paper/Folia whitelist plugin with multiple named lists, SQLite persistence, player-name resolution, JSON imports, and region-safe enforcement.
 
+## Features
+- Multi Whitelist support: Designed for multiple Lists at the same time
+- Hotswapping Lists: Lists can be swapped using a single command
+- Easy Import: `/wl import whitelist.json xxx` imports your already existing Server whitelist.json
+- Enforcement: Kicks all players not on the list
+- Extensive list management: Lots of commands to Create/Delete/Merge/Manage lists
+- Developer friendly API: Easy plugin integration
+
 ## Commands
 
 | Command | Purpose |
@@ -97,12 +105,12 @@ WhitelistService service = wl.service();
 | Method | Description |
 |---|---|
 | `boolean isEnabled()` | Is whitelisting globally on? |
-| `boolean setEnabled(boolean)` | Turn whitelisting on/off; `false` when unchanged. |
+| `boolean setEnabled(boolean)` | Turn whitelisting on/off; returns `false` when unchanged. |
 | `String activeListName()` | Name of the active (login-enforced) list, or `null`. |
 | `WhitelistList activeList()` | The active list object, or `null`. |
 | `boolean setActiveList(String name)` | Set the active list (`null` clears it); `false` when unchanged. |
 
-### Membership (the hot path)
+### Membership
 | Method | Description |
 |---|---|
 | `boolean isWhitelisted(UUID id, String name)` | The exact check used on login. `true` if whitelisting is off, no active list, or the identity is on the active list (by UUID **or** name). |
@@ -132,13 +140,13 @@ boolean allowed = service.isWhitelisted(event.getUniqueId(), event.getName());
 | `MergeResult merge(String a, String b, String newName)` | Merge two lists into a new one. |
 | `int addFromList(String src, String dest)` | Copy entries and return the number added (`-1` if missing). |
 
-### Name cache (UUID ⇄ name)
+### Name cache (UUID <-> name)
 Entries are stored **UUID-first**; a persistent cache maps UUIDs to last-known names
 (fed by logins, imports, and playerdb.co lookups).
 
 | Method | Description |
 |---|---|
-| `void cacheName(UUID id, String name)` | Record/persist a UUID → name mapping. |
+| `void cacheName(UUID id, String name)` | Record/persist a UUID -> name mapping. |
 | `String nameFor(UUID id)` | Last-known name for a UUID, or `null`. |
 | `UUID uuidForName(String name)` | Cached UUID for a name (case-insensitive), or `null`. |
 
@@ -148,8 +156,8 @@ Entries are stored **UUID-first**; a persistent cache maps UUIDs to last-known n
 | `String name()` | Display name. |
 | `boolean contains(UUID id, String name)` | Matches by UUID or name. |
 | `Set<UUID> uuids()` | Live UUID entries. |
-| `Map<String,String> names()` | lower-cased name → display name. |
+| `Map<String,String> names()` | lower-cased name -> display name. |
 | `int size()` | Total entry count. |
 
-`MergeResult` ∈ `{ OK, MISSING_A, MISSING_B, TARGET_EXISTS }`.
+`MergeResult`: `{ OK, MISSING_A, MISSING_B, TARGET_EXISTS }`.
 
