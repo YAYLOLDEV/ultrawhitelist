@@ -2,12 +2,6 @@
 
 UltraWhitelist is a Paper/Folia whitelist plugin with multiple named lists, SQLite persistence, player-name resolution, JSON imports, and region-safe enforcement.
 
-## Requirements
-
-- Java 25
-- Paper/Folia API 26.1.2 or newer
-- Maven 3.9+
-
 ## Commands
 
 | Command | Purpose |
